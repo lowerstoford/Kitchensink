@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+
+		<div data-role="page" id="pageEvents" data-cache="never" data-add-back-btn="true">
+			<script type="text/javascript" charset="utf-8">
+				//http://docs.phonegap.com/en/2.3.0/cordova_events_events.md.html#Events
+				
+				$("#pageEvents").bind('pageinit', function() {
+					
+					document.addEventListener("pause", onPause, false);
+					document.addEventListener("resume", onResume, false);
+					document.addEventListener("online", onOnline, false);
+					document.addEventListener("offline", onOffline, false);					
+					document.addEventListener("backbutton", onBackKeyDown, false);
+					
+					window.addEventListener("batterycritical", onBatteryCritical, false);
+					window.addEventListener("batterylow", onBatteryLow, false);
+					window.addEventListener("batterystatus", onBatteryStatus, false);
+					
+					document.addEventListener("menubutton", onMenuKeyDown, false);
+					document.addEventListener("searchbutton", onSearchKeyDown, false);
+					document.addEventListener("startcallbutton", onStartCallKeyDown, false);
+					document.addEventListener("endcallbutton", onEndCallKeyDown, false);
+					
+					document.addEventListener("volumedownbutton", onVolumeDownKeyDown, false);
+					document.addEventListener("volumeupbutton", onVolumeUpKeyDown, false);
+					
+				});
+				
+				$("#pageEvents").bind( 'pagehide',function(event, ui){					
+					document.removeEventListener("backbutton", onBackKeyDown, false);
+					document.removeEventListener("menubutton", onMenuKeyDown, false);
+					document.removeEventListener("searchbutton", onSearchKeyDown, false);
+				});
+				
+				function onPause() {
+					$("#eventMessage").append("Pause event fired<br />");
+				}
+								
+				function onResume() {
+					$("#eventMessage").append("Resume event fired<br />");
+				}
+
+				function onOnline() {
+					$("#eventMessage").append("You just got online<br />");
+				}
+				
+				// Handle the offline event
+				//
+				function onOffline() {
+					$("#eventMessage").append("You are now offline<br />");
+				}
+				
+				// Handle the back button
+				//
+				function onBackKeyDown() {
+					$("#eventMessage").append("Back button was pressed<br />");
+				}
+				
+				// Handle the batterycritical event
+				//
+				function onBatteryCritical(info) {
+					$("#eventMessage").append("<span class='error'>Battery Level Critical " + info.level + " - Recharge Soon!</span><br />");
+				}
+				
+				// Handle the batterylow event
+				//
+				function onBatteryLow(info) {
+					$("#eventMessage").append("<span class='warn'>Battery Level Low " + info.level + "%</span><br />"); 
+				}
+
+				// Handle the batterystatus event
+				//
+				function onBatteryStatus(info) {
+					$("#eventMessage").append("<span class='success'>Level: " + info.level + " isPlugged: " + info.isPlugged + "</span><br />"); 
+				}
+				
+				// Handle the menu button
+				//
+				function onMenuKeyDown() {
+					$("#eventMessage").append("Menu button Pressed<br />");
+				}
+
+				// Handle the search button
+				//
+				function onSearchKeyDown() {
+					$("#eventMessage").append("Search button Pressed<br />");
+				}
+				
+				// Handle the start call button
+				//
+				function onStartCallKeyDown() {
+					$("#eventMessage").append("<span class='success'>Call started</span><br />");
+				}
+				
+				// Handle the end call button
+				//
+				function onEndCallKeyDown() {
+					$("#eventMessage").append("<span class='error'>Call ended</span><br />");
+				}
+	
+				// Handle the volume down button
+				//
+				function onVolumeDownKeyDown() {
+					$("#eventMessage").append("Volume Down Pressed<br />");
+				}
+
+				// Handle the volume up button
+				//
+				function onVolumeUpKeyDown() {
+					$("#eventMessage").append("Volume Up Pressed<br />");
+				}			
+				
+			</script>
+		
+			<div data-role="header">
+				<h1>Events</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">
+				<label>System Events:</label>
+				<br />
+				<div id="eventMessage"></div>																					
+			</div><!-- /content -->
+					
+		</div><!-- /page -->
+    				
+    </body>
+</html>

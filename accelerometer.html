@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+
+		<div data-role="page" id="pageAccelerometer" data-cache="never">
+			<script type="text/javascript" charset="utf-8">
+				var accelInterval;
+				
+				$("#pageAccelerometer").bind('pageinit', function() {		
+					
+					accelInterval = setInterval(updateAcceleration, 500);				
+					
+					$("#selAccel").off('change').on('change', function() {
+						if ($(this).val() == 'on') {
+							accelInterval = setInterval(updateAcceleration, 700);
+						}
+						else
+						{
+							clearInterval(accelInterval);
+						}						
+					});
+				});
+				
+				$("#pageCompass").live( 'pagehide',function(event, ui){
+					clearInterval(accelInterval);
+				});
+				
+				function updateAcceleration() {
+					navigator.accelerometer.getCurrentAcceleration(accelerometerSuccess, accelerometerError);
+				}
+				
+				function accelerometerSuccess(acceleration) {
+					$("#xAccel").text("x - " + acceleration.x);
+					$("#yAccel").text("y - " + acceleration.y);
+					$("#zAccel").text("x - " + acceleration.z); 
+					$("#timeStamp").text("time - " + acceleration.timestamp);					
+				};
+
+				function accelerometerError() {
+					$("#error").append('<p>error</p>');
+				};
+			</script>
+		
+			<div data-role="header">
+				<h1>Accelerometer</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">	
+				<label for="selCompass">Get Readings:</label>
+				<select name="selAccel" id="selAccel" data-role="slider" data-theme="c" data-track-theme="a">
+						<option value="on">On</option>
+						<option value="off">Off</option>
+				</select>
+				<br />
+				<br />
+				<label id="xAccel"></label>
+				<br />
+				<label id="yAccel"></label>
+				<br />
+				<label id="zAccel"></label>
+				<br />
+				<label id="timeStamp"></label>
+				<br />
+				<div id="error"></div>
+			</div><!-- /content -->
+
+		</div><!-- /page -->
+    				
+    </body>
+</html>

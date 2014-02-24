@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+		<div data-role="page" id="pageMedia" data-cache="never">
+			<script type="text/javascript" charset="utf-8">
+				// http://docs.phonegap.com/en/2.3.0/cordova_media_media.md.html#Media
+			
+				$("#pageMedia").bind('pageinit', function() {
+					$("#pageMedia a").off("click").on("click", function() {
+						gaPlugin.trackPage( nativePluginResultHandler, nativePluginErrorHandler, $(this).attr("href") );
+					});
+				});
+			</script>
+		
+			<div data-role="header">
+				<h1>Record Media</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">
+				<a href="media_play.html" data-role="button">Play Audio</a>
+				<br />
+				<a href="media_record.html" data-role="button" data-theme="a">Record Audio</a>				
+			</div>
+		
+		</div>
+	
+	</body>
+</html>

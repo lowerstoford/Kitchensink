@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/jquery.mobile.1.2.min.css" />         
+		<link rel="stylesheet" href="css/style.css" />         
+        
+        <script src="js/jquery.1.8.2.min.js" type="text/javascript"></script>
+		<script src="js/jquery.mobile.1.2.min.js"></script>        
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="barcodescanner.js"></script>
+		<script src="GAPlugin.js"></script>
+		<script src="PushNotification.js"></script>
+		
+		<script type="text/javascript" charset="utf-8">
+						
+			//var baseUrl = 'http://grappsmobile.com/grtv/';
+			
+			$(function() {
+				// on exit
+				// gaPlugin.exit(nativePluginResultHandler, nativePluginErrorHandler);
+			});
+			
+			var gaPlugin;
+			document.addEventListener("deviceready", myDeviceReadyListener, false);
+			
+			function myDeviceReadyListener() {			
+				gaPlugin = window.plugins.gaPlugin;
+				gaPlugin.init(gaSuccess, gaError, "UA-23823097-4", 10);
+				//23823097-4 <-- web property
+				//23823097-3 <-- app property
+			} 
+			
+			function gaSuccess() {
+				try
+				{
+					gaPlugin.trackPage( nativePluginResultHandler, nativePluginErrorHandler, "index.html");
+					$("#gaResults").html("<span class='success'>GA tracked pageview!</span>");
+					$("#pageHome ul li a").off("click").on("click", function() {
+						gaPlugin.trackPage( nativePluginResultHandler, nativePluginErrorHandler, $(this).attr("href") );
+					});
+				} catch (e) {
+					$("#gaResults").html("<span class='error'>GA could not track pageview - " + e + "</span>");
+				}
+			}
+			
+			function gaError() {
+				$("#gaResults").append("<span class='error'>GA error</span>");
+			}
+			
+			function nativePluginResultHandler(obj) {
+				$("#gaResults").append("<br /><span class='warn'>GA Plugin Result - ");
+				if (obj != undefined) {
+					$("#gaResults").append(obj);
+				}
+				$("#gaResults").append("</span>");
+			}
+			
+			function nativePluginErrorHandler() {
+				$("#gaResults").append("<span class='error'>GA Plugin Error Result</span>");
+			}
+		</script>
+		
+    </head>
+    <body>
+
+		<div data-role="page" id="pageHome" data-cache="never">
+			<div data-role="header">
+				<h1>PGB APIs</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">	
+				<h2>Base APIs</h2>
+				<ul data-role="listview" data-inset="true">
+					<li><a href="accelerometer.html">Accelerometer</a></li>
+					<li><a href="camera.html">Camera</a></li>
+					<li><a href="capture.html">Capture</a></li>
+					<li><a href="compass.html">Compass</a></li>
+					<li><a href="connection.html">Connection</a></li>
+					<li><a href="contacts.html">Contacts</a></li>
+					<li><a href="device.html">Device</a></li>
+					<li><a href="events.html">Events</a></li>
+					<li><a href="file.html">File</a></li>
+					<li><a href="geolocation.html">Geolocation</a></li>
+					<li><a href="globalization.html">Globalization</a></li>
+					<li><a href="inappbrowser.html">InAppBrowser</a></li>
+					<li><a href="media.html">Media</a></li>
+					<li><a href="notification.html">Notification</a></li>
+					<li><a href="splashscreen.html">Splashscreen</a></li>
+					<li><a href="storage.html">Storage</a></li>
+				</ul>
+				<h2>Additional Plugins</h2>
+				<ul data-role="listview" data-inset="true">
+					<li><a href="barcode.html">Barcode Scanner</a></li>
+					<li><a href="google_analytics.html">Google Analytics</a></li>
+				</ul>
+				<div id="gaResults" style="display:none;"></div>
+				<h2>jQuery Mobile</h2>
+				<ul data-role="listview" data-inset="true">
+					<li><a href="jquery_tap.html">Tap Event</a></li>
+					<li><a href="jquery_swipe.html">Swipe Event</a></li>
+					<li><a href="jquery_popup_panels.html">Popup Panels</a></li>
+				</ul>
+
+			</div><!-- /content -->
+
+		</div><!-- /page -->
+    	
+    </body>
+</html>

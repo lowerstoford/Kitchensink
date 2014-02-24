@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+
+		<div data-role="page" id="pageDevice" data-cache="never">
+			<script type="text/javascript" charset="utf-8">
+				//http://docs.phonegap.com/en/2.3.0/cordova_device_device.md.html#Device
+				
+				$("#pageDevice").bind('pageshow', function() {
+					deviceInformation();
+				});
+				
+				function deviceInformation() {					
+					if (device == undefined) {
+						$("#deviceProperties thead th").html("<span class='warn'>Could not load device</span>");
+						if (window.device != undefined) {
+							$("#deviceProperties thead th").append("<br />try window.device instead");
+						}
+					} 
+					else 
+					{
+						$('#deviceProperties tbody').append('<tr><td>Device Name: </td><td>' 	 + device.name + '</td></tr>');
+						$('#deviceProperties tbody').append('<tr><td>Device Cordova: </td><td>'  + device.cordova  + '</td></tr>');
+						$('#deviceProperties tbody').append('<tr><td>Device Platform: </td><td>' + device.platform + '</td></tr>');
+						$('#deviceProperties tbody').append('<tr><td>Device UUID: </td><td>'     + device.uuid     + '</td></tr>');
+						$('#deviceProperties tbody').append('<tr><td>Device Model: </td><td>'    + device.model     + '</td></tr>');
+						$('#deviceProperties tbody').append('<tr><td>Device Version: </td><td>'  + device.version  + '</td></tr>');
+					}
+				}
+				
+			</script>
+		
+			<div data-role="header">
+				<h1>Device</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">	
+				<table id="deviceProperties">
+					<thead>
+						<tr><th colspan="2">Device Properties</th></tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div><!-- /content -->
+
+		</div><!-- /page -->
+    				
+    </body>
+</html>

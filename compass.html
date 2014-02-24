@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+
+		<div data-role="page" id="pageCompass" data-cache="never">
+			<script type="text/javascript" charset="utf-8">
+				// http://docs.phonegap.com/en/2.3.0/cordova_compass_compass.md.html#Compass
+			
+				// The watch id references the current `watchHeading`
+				var watchID = null;				
+				
+				$("#pageCompass").bind('pageinit', function() {
+					startWatch();
+				
+					$("#selCompass").off('change').on('change', function() {
+						if ($(this).val() == 'on') {
+							startWatch();
+							gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Compass", "Switch", "On", 1);
+						}
+						else
+						{
+							stopWatch();
+							gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Compass", "Switch", "Off", 1);
+						}
+					});
+				});
+				
+				$("#pageCompass").bind( 'pagehide',function(event, ui){					
+					stopWatch();
+				});
+				
+				function rotate(degree) {
+					$('#compass').animate({  textIndent: 0 }, {
+							step: function(now,fx) {
+							  $(this).css('-webkit-transform','rotate(' + degree + 'deg)'); 
+							},
+							duration:'fast'
+						},'linear');
+				}
+
+				// Start watching the compass
+				//
+				function startWatch() {
+
+					// Update compass every 1 second
+					var options = { frequency: 1000 };
+
+					watchID = navigator.compass.watchHeading(onSuccess, onError, options);
+				}
+					
+				// Stop watching the compass
+				//
+				function stopWatch() {
+					if (watchID) {
+						navigator.compass.clearWatch(watchID);
+						watchID = null;
+					}
+				}
+	
+				function onSuccess(heading) {
+					//alert('Heading: ' + heading.magneticHeading);
+					$("#magneticHeading").text( parseFloat(heading.magneticHeading).toFixed(4));
+					$("#trueHeading").text( parseFloat(heading.trueHeading).toFixed(4));
+					rotate( Math.round(360 - heading.magneticHeading) );
+				};
+
+				function onError(error) {
+					$("#magneticHeading").text(error.code);
+					$("#trueHeading").text(error.code);
+				};
+			</script>
+		
+			<div data-role="header">
+				<h1>Compass</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">	
+			
+				<label for="selCompass">Compass:</label>
+				<select name="selCompass" id="selCompass" data-role="slider" data-theme="c" data-track-theme="a">
+						<option value="on">On</option>
+						<option value="off">Off</option>
+				</select>
+				<br />
+				
+				<table>
+					<tr>
+						<td>Magnetic Heading:</td><td id="magneticHeading"></td>
+					</tr>
+					<tr>
+						<td>True Heading:</td><td id="trueHeading"></td>
+					</tr>
+				</table>
+				<!--<div style="position:relative;width: 100%; height: 140px;">
+					<div id="needle" style="display: block; width: 20px; height: 140px; background-color: #ddd; position: absolute; left: 50%;"><div style="color: #fff; background-color: red;">&nbsp;N</div></div>
+				</div>-->
+				
+				<div style="position:relative;width: 100%; height: 260px; margin-top: 40px;">
+					<br />
+					<div id="compass" style="display: block; width: 200px; height: 200px; margin-left: auto; margin-right: auto; background-color: transparent; ">
+						<img src="images/compass.png" width="200" height="200" align="center" />
+					</div>
+				</div>
+			</div><!-- /content -->
+
+		</div><!-- /page -->
+    				
+    </body>
+</html>

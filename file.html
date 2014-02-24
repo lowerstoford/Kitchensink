@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/jquery.mobile.1.2.min.css" />         
+		<link rel="stylesheet" href="css/style.css" />         
+        
+        <script src="js/jquery.1.8.2.min.js" type="text/javascript"></script>
+		<script src="js/jquery.mobile.1.2.min.js"></script>        
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    </head>
+    <body>
+
+		<div data-role="page" id="pageFile" data-cache="never">
+			<script type="text/javascript" charset="utf-8">
+				//http://docs.phonegap.com/en/2.3.0/cordova_file_file.md.html#File
+			
+				$("#pageFile").bind('pageshow', function() {
+					$("#fileResult").html("");
+					$("#btnGetFile").off("click").on("click", getFile);	
+					$("#btnCreateFile").off("click").on("click", createFile);
+				});
+				
+				function createFile() {
+					$("#fileResult").append("Creating file: " + $("#txtFileName").val() + "<br />");
+					window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSCreate, fail);
+				}
+				
+				function getFile() {
+					$("#fileResult").append("Looking for: " + $("#txtFileName").val() + "<br />");
+					window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+				}
+				
+				function gotFSCreate(fileSystem) {
+					var fileName = $("#txtFileName").val();
+					$("#fileResult").append("<span class='success'>gotFSCreate success</span><br />");
+					fileSystem.root.getFile(fileName, {create: true, exclusive: false}, gotFileEntry, fail);
+				}
+				
+				function gotFS(fileSystem) {
+					var fileName = $("#txtFileName").val();
+					$("#fileResult").append("<span class='success'>gotFS success</span><br />");
+					fileSystem.root.getFile(fileName, null, gotFileEntry, fail);
+				}
+
+				function gotFileEntry(fileEntry) {
+					$("#fileResult").append("<span class='success'>gotFileEntry success</span><br />");
+					fileEntry.file(gotFile, fail);
+				}
+
+				function gotFile(file){
+					$("#fileResult").append("<span class='success'>gotFile success</span><br />");
+					readDataUrl(file);
+					readAsText(file);
+				}
+
+				function readDataUrl(file) {
+					var reader = new FileReader();
+					reader.onloadend = function(evt) {
+						$("#fileResult").append("Read as data URL<br />");
+						$("#fileResult").append(evt.target.result + "<br />");
+					};
+					reader.readAsDataURL(file);
+				}
+
+				function readAsText(file) {
+					var reader = new FileReader();
+					reader.onloadend = function(evt) {
+						$("#fileResult").append("Read as text<br />");
+						$("#fileResult").append(evt.target.result + "<br />");
+					};
+					reader.readAsText(file);
+				}
+
+				function fail(evt) {
+					$("#fileResult").append("<span class='error'>Error");
+					if (evt != undefined && evt.target != undefined && evt.target.error != undefined) {
+						$("#fileResult").append(evt.target.error.code);
+					}
+					$("#fileResult").append("</span><br />");
+				}
+			</script>
+		
+			<div data-role="header">
+				<h1>File</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">	
+				<input type="text" id="txtFileName" data-mini="true" />
+				<a href="" data-role="button" id="btnGetFile">Get File</a>
+				<a href="" data-role="button" id="btnCreateFile" data-theme="b">Create File</a>
+				<div id="fileResult"></div>
+			</div><!-- /content -->
+
+		</div><!-- /page -->
+    				
+    </body>
+</html>

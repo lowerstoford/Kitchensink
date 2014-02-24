@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+
+		<div data-role="page" id="pageTap" data-cache="never">
+			<script type="text/javascript" charset="utf-8">
+				//http://jquerymobile.com/test/docs/api/events.html
+				
+				$("#pageTap").bind('pageshow', function() {					
+					$('.tap').off('tap').on('tap',function(event) {
+						$(this).find("div").toggle(); //  toggles the visibility/display of the element.
+					});
+					
+					$("#tapHold").off('taphold').on('taphold', function() {
+						$("#tapHold").find("p").html("What are you holding on to??");
+					});
+				});
+			</script>
+		
+			<div data-role="header">
+				<h1>jQuery Mobile Tap</h1>
+			</div><!-- /header -->
+			
+			<div data-role="content">
+				<div class="ui-grid-a">
+					<div class="ui-block-a tap" style="border:1px solid #ddd; height: 40px;"><div><strong>I'm Block A</strong> and text inside will wrap</div></div>
+					<div class="ui-block-b tap" style="border:1px solid #ddd; height: 40px;"><div><strong>I'm Block B</strong> and text inside will wrap</div></div>
+				</div><!-- /grid-a -->
+				<br />
+				<div id="tapHold">
+					<p>I dare you to hold on to me</p>
+				</div>
+			</div><!-- /content -->
+			
+		</div> <!-- /page -->
+    				
+    </body>
+</html>

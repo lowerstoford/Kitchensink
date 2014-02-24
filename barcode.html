@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+
+		<div data-role="page" id="pageBarcode" data-cache="never">
+			<script type="text/javascript" charset="utf-8">
+				//https://build.phonegap.com/docs/plugins
+				//https://github.com/wildabeast/BarcodeScanner/blob/master/README.md
+				
+				$("#pageBarcode").bind('pageshow', function() {
+					$("#btnScan").off('click').on('click', function() {
+						scan();
+						gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Barcode", "Scan", "Clicked", 1);
+					});
+					$("#btnEncode").off('click').on('click', function() {
+						encode();
+						gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Barcode", "Encode", "Clicked", 1);
+					});
+					
+					$("#pageHome ul li a").off("click").on("click", function() {
+						gaPlugin.trackPage( nativePluginResultHandler, nativePluginErrorHandler, $(this).attr("href") );
+					});
+				});
+				
+				function scan() {
+					window.plugins.barcodeScanner.scan( 
+						function(result) { 
+							$("#scanResults").html("<span class='success'>We got a barcode!</span><br />");
+							
+							if (result.text.indexOf("http://") >= 0) {
+								$("#scanResults").append("Result: <a href='#' onclick='openBrowser(\"" + result.text + "\")'>" + result.text + "</a><br />");
+							} else {
+								$("#scanResults").append("Result: " + result.text + "<br />");
+							}
+							$("#scanResults").append("Format: " + result.format + "<br />");
+							$("#scanResults").append("Cancelled: " + result.cancelled);
+							
+							$("#txtEncode").val(result.text);
+							
+							gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Barcode", "Scan", result.text, 1);
+						}, 
+						function(error) {
+							$("#scanResults").html("<span class='error'>Scanning failed: " + error + "</span>");
+							gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Barcode", "Scan", "Error: " + error, 1);
+						}
+					);
+				}
+				
+				function encode() {
+					var msg = $("#txtEncode").val();
+					window.plugins.barcodeScanner.encode(BarcodeScanner.Encode.TEXT_TYPE, msg, 
+					function(success) {
+						$("#scanResults").html("<span class='success'>Encode success: " + success + "</span>");
+						gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Barcode", "Encode", msg, 1);
+					  }, function(error) {
+						$("#scanResults").html("<span class='error'>Encoding failed: " + fail = "</span>");
+						gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Barcode", "Encode", "Error: " + error, 1);
+					  }
+					);
+				}
+				
+				// using inappbrowser plugin
+				function openBrowser(src) {
+					var ref = window.open(src, '_blank', 'location=yes');
+					gaPlugin.trackEvent( nativePluginResultHandler, nativePluginErrorHandler, "Barcode", "HTTP Opened", src, 1);
+				}
+									
+			</script>
+		
+			<div data-role="header">
+				<h1>Barcode Scanner</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">	
+				<div data-role="fieldcontain">
+					<a id="btnScan" data-role="button">Scan Now</a>
+				</div>
+				<div data-role="fieldcontain">
+					<input type="text" value="Kitchen Sink!" id="txtEncode" />
+					<a id="btnEncode" data-role="button">Encode Now</a>
+				</div>
+				<div id="scanResults"></div>
+			</div><!-- /content -->
+
+		</div><!-- /page -->
+    				
+    </body>
+</html>

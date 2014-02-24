@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PGB Kitchen Sink</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    </head>
+    <body>
+
+		<div data-role="page" id="pageSplashscreen" data-cache="never">
+			<script type="text/javascript" charset="utf-8">
+				//http://docs.phonegap.com/en/2.3.0/cordova_splashscreen_splashscreen.md.html#Splashscreen
+				
+				$("#pageSplashscreen").bind('pageshow', function() {
+					$("#btnShowSplashscreen").off('click').on('click', showSplashscreen);
+				});
+				
+				function showSplashscreen() {					
+					$("#showResults").html("trying to show");
+					navigator.splashscreen.show();
+					
+					//setTimeout(hidSplashscreen, 2000);
+				}
+				
+				function hidSplashscreen() {
+					$("#showResults").html("trying to hide");
+					navigator.splashscreen.hide();
+				}
+			</script>
+		
+			<div data-role="header">
+				<h1>Splashscreen</h1>
+			</div><!-- /header -->
+
+			<div data-role="content">	
+				<button id="btnShowSplashscreen">Show Splashscreen (2 sec)</div>
+				<div id="showResults"></div>
+			</div><!-- /content -->
+
+		</div><!-- /page -->
+    				
+    </body>
+</html>
