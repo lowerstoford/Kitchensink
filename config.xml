@@ -48,21 +48,21 @@
     <gap:splash src="res/screen/windows-phone/screen-portrait.jpg" gap:platform="winphone" />-->
 	
 	<gap:plugin name="Accelerometer" value="org.apache.cordova.AccelListener" />
-	<gap:plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
-	<gap:plugin name="Capture" value="org.apache.cordova.Capture"/>
+	<gap:plugin name="org.apache.cordova.camera" />
+	<gap:plugin name="org.apache.cordova.media-capture" />
 	
 	<gap:plugin name="org.apache.cordova.contacts" />
 	<gap:plugin name="org.apache.cordova.device" />
 	<gap:plugin name="org.apache.cordova.network-information" />	
 	<gap:plugin name="org.apache.cordova.battery-status" />
-	<gap:plugin name="File" value="org.apache.cordova.FileUtils" />
+	<gap:plugin name="org.apache.cordova.file" />
 	<gap:plugin name="org.apache.cordova.file-transfer" />
 	<gap:plugin name="org.apache.cordova.geolocation" />
-	<gap:plugin name="Globalization" value="org.apache.cordova.Globalization" />	
-	<gap:plugin name="Media" value="org.apache.cordova.AudioHandler" />
+	<gap:plugin name="org.apache.cordova.globalization" />	
+	<gap:plugin name="org.apache.cordova.media" /
 	<plugin name="Media" value="CDVSound" />
 	<gap:plugin name="org.apache.cordova.inappbrowser" />
-	<gap:plugin name="Notification" value="org.apache.cordova.Notification"/>
+	<gap:plugin name="org.apache.cordova.dialogs" />
 	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="Storage" value="org.apache.cordova.Storage" />
 	
