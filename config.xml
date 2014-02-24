@@ -63,7 +63,7 @@
 	<plugin name="Media" value="CDVSound" />
 	<gap:plugin name="InAppBrowser" value="org.apache.cordova.InAppBrowser" />
 	<gap:plugin name="Notification" value="org.apache.cordova.Notification"/>
-	<gap:plugin name="SplashScreen" value="org.apache.cordova.SplashScreen"/>
+	<gap:plugin name="org.apache.cordova.splashscreen" />
 	<gap:plugin name="Storage" value="org.apache.cordova.Storage" />
 	
 	<gap:plugin name="com.phonegap.plugins.barcodescanner" />
