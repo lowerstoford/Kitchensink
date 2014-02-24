@@ -56,7 +56,7 @@
 	<gap:plugin name="NetworkStatus" value="org.apache.cordova.NetworkManager" />	
 	<gap:plugin name="Battery" value="org.apache.cordova.BatteryListener" />
 	<gap:plugin name="File" value="org.apache.cordova.FileUtils" />
-	<gap:plugin name="FileTransfer" value="org.apache.cordova.FileTransfer" />
+	<gap:plugin name="org.apache.cordova.file-transfer" />
 	<gap:plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
 	<gap:plugin name="Globalization" value="org.apache.cordova.Globalization" />	
 	<gap:plugin name="Media" value="org.apache.cordova.AudioHandler" />
