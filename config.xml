@@ -52,7 +52,7 @@
 	<gap:plugin name="Capture" value="org.apache.cordova.Capture"/>
 	<gap:plugin name="Compass" value="org.apache.cordova.CompassListener" />
 	<gap:plugin name="Contacts" value="org.apache.cordova.ContactManager" />
-	<gap:plugin name="Device" value="org.apache.cordova.Device" />
+	<gap:plugin name="org.apache.cordova.device" />
 	<gap:plugin name="org.apache.cordova.network-information" />	
 	<gap:plugin name="org.apache.cordova.battery-status" />
 	<gap:plugin name="File" value="org.apache.cordova.FileUtils" />
